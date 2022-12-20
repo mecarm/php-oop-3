@@ -20,7 +20,7 @@ $generi = [
     'fantasyCd'=> new Generi('Fantasy', '<i class="fa-solid fa-compact-disc"></i>'),
 ];
 
-var_dump($generi);
+// var_dump($generi);
 
 $prodotti = [
     new Libro('La scelta di Natan', 'Antonio Puccio', 23.40, $generi['giallo'], true, 'https://media.takealot.com/covers_images/a0184f11e1314c4b903404bf6dae580f/s-pdpxl.file', 250, 'flessibile'),
@@ -29,13 +29,13 @@ $prodotti = [
     new Dvd('Il cavaliere oscuro', 'Christofer Nolan', 12, $generi['azioneCd'], true, 'https://pad.mymovies.it/filmclub/2007/02/131/locandina.jpg', 160, 'https://pad.mymovies.it/filmclub/2007/02/131/locandina.jpg')
 ];
 
-var_dump($prodotti);
+// var_dump($prodotti);
 
 $impiegati = [
-    $impiegato1 = new Impiegato('Paolo Rossi', 24),
-    $impiegato2 = new Impiegato('Marco Rossi', 28),
-    $impiegato3 = new Impiegato('Stefano Piccolo', 34),
-    $impiegato4 = new Impiegato('Melania Esposito', 20)
+    $impiegato1 = new Impiegato('Paolo Rossi'),
+    $impiegato2 = new Impiegato('Marco Rossi'),
+    $impiegato3 = new Impiegato('Stefano Piccolo'),
+    $impiegato4 = new Impiegato('Melania Esposito')
 ];
 
 $impiegato1->reparto = 'Cd';
@@ -47,7 +47,24 @@ $impiegato2->vendite = 30;
 $impiegato3->vendite = 25;
 $impiegato4->vendite = 101;
 
-var_dump($impiegati);
+//Stampare gli errori sottoforma di eccezioni
+// try{
+//     $impiegato1->setEta('venti');
+// }
+// catch(Exception $e){
+//     echo 'Si è verificato un errore: ' . $e->getMessage();
+// }
+try{
+    $impiegato1->setEta(21);
+    $impiegato2->setEta(25);
+    $impiegato3->setEta(28);
+    $impiegato4->setEta(20);
+}
+catch(Exception $e){
+    echo 'Si è verificato un errore: ' . $e->getMessage();
+}
+
+// var_dump($impiegati);
 
 ?>
 
@@ -70,6 +87,57 @@ var_dump($impiegati);
 
 <body>
 
+<div class="container">
+    <div class="row ">
+        <!-- my php code which uses x-path to get results from xml query. -->
+        <?php foreach ($prodotti as $elements): ?>
+        <div class="col-sm-4 ">
+            <div class="card-columns-fluid">
+                <div class="card  bg-light" style="width: 22rem; ">
+                    <img class="card-img-top" src=" <?php echo $elements->immagine; ?> " alt="Card image cap">
+
+                    <div class="card-body">
+                        <h5 class="card-title"><b><?php echo $elements->nome ?></b></h5>
+                        <p class="card-text"><b> € <?php echo $elements->prezzo ?></b></p>
+                        <p class="card-text"><?php echo $elements->generi->icon ?></p>
+                        <p class="card-text"><?php echo $elements->generi->name ?></p>
+                        <p class="card-text"><?php echo $elements->autore ?></p>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Vedi dettagli
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">
+                                    <?php if(isset($elements->pagine)) {
+                                        echo "Pagine: $elements->pagine";
+                                    }
+                                    elseif(isset($elements->durata)){
+                                        echo "Durata: $elements->durata";
+                                    } ?></a>
+                                </li>
+                                <li><a class="dropdown-item" href="#">
+                                        <?php if (isset($elements->copertina)) {
+                                            echo "Pagine: $elements->copertina";
+                                        } elseif (isset($elements->piattaforma)) {
+                                            echo "Durata: $elements->piattaforma";
+                                        }
+                                         ?>
+                                    </a></li>
+                                <li><a class="dropdown-item" href="<?php if (isset($elements->link)) {echo $elements->link;} ?>">
+                                <?php if (isset($elements->link)) {
+                                    echo "Link";
+                                } ?>
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</div> <!--container div  -->
+</div>
 
 
     <!-- Bootstrap 5 -->
