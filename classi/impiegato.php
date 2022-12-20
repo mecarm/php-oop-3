@@ -5,18 +5,15 @@ include_once __DIR__ . '/../traits/reparto.php';
 class Impiegato{
     public $nome;
     public $eta;
-    public $vendite;
 
     use Reparti;
 
     public function __construct(
         String $nome,
-        Int $eta,
-        Int $vendite
+        Int $eta
     ) {
         $this->nome = $nome;
         $this->eta = $eta;
-        $this->vendite = $vendite;
     }
 }
 
